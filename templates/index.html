@@ -36,21 +36,39 @@
         <div class="child"> 
             <h1>부동산 실거래가 조회</h1>
             <h3>최근 거래된 아파트의 실거래가를 조회 합니다. </h3>
-
-            <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="아파트 주소" aria-label="address" aria-describedby="basic-addon2">
-                <div class="input-group-append">
-                  <button class="btn btn-dark" type="button">조회 하기</button>
+            <form action="post">
+              <label  for="">아파트 주소: </label>
+                <div class="input-group mb-3">
+                  <input type="text"  id="address_kakao" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
                 </div>
-              </div>
 
+                <label for="">상  세 주 소: </label>
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="address_detail">
+                </div>
+              <button class="btn btn-dark" type="submit">검색하기</button>
+          </form>
+        
+          
         </div>
       </div>
 
 
 
-    
-
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script>
+        window.onload = function(){
+          document.getElementById("address_kakao").addEventListener("click", function(){ //주소입력칸을 클릭하면
+        //카카오 지도 발생
+        new daum.Postcode({
+            oncomplete: function(data) { //선택시 입력값 세팅
+                document.getElementById("address_kakao").value = data.address; // 주소 넣기
+                document.querySelector("input[name=address_detail]").focus(); //상세입력 포커싱
+                    }
+                }).open();
+            });
+        }
+    </script>
 
     <!-- bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
