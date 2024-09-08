@@ -36,10 +36,10 @@
         <div class="child"> 
             <h1>부동산 실거래가 조회</h1>
             <h3>최근 거래된 아파트의 실거래가를 조회 합니다. </h3>
-            <form action="post">
+            <form action="{{url_for('index')}}" method="post">
               <label  for="">아파트 주소: </label>
                 <div class="input-group mb-3">
-                  <input type="text"  id="address_kakao" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                  <input type="text"  id="address_kakao" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="address">
                 </div>
 
                 <label for="">상  세 주 소: </label>
@@ -54,6 +54,11 @@
         </div>
       </div>
 
+      <div class="container"></div>
+        <h1>DataFrame Table</h1>
+        <!-- DataFrame HTML 테이블 출력 -->
+        <div>{{ table_html|safe }}</div>
+    </div>
 
 
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
