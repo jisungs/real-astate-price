@@ -9,7 +9,7 @@
     <!-- css -->
     <link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}">
 
-    <title>index.html</title>
+    <title>아파트 실거래가 검색</title>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
@@ -31,7 +31,8 @@
           </div>
         </div>
       </nav>
-      
+
+
       <div class="parent container d-flex justify-content-center align-items-center h-100">
         <div class="child"> 
             <h1>부동산 실거래가 조회</h1>
@@ -42,36 +43,44 @@
                   <input type="text"  id="address_kakao" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="address">
                 </div>
 
-                <label for="">상  세 주 소: </label>
+                <!-- <label for="">상  세 주 소: </label>
                 <div class="input-group mb-3">
                   <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="address_detail">
-                </div>
+                </div> -->
               <button class="btn btn-dark" type="submit">실거래가 검색하기</button>
               
           </form>
         
+          <div class="container"></div>
+            <h1>실거래가 정보</h1>
+            <!-- DataFrame HTML 테이블 출력 -->
+            <div>{{ table_html|safe }}</div>
+          </div>
           
         </div>
       </div>
 
-      <div class="container"></div>
-        <h1>DataFrame Table</h1>
-        <!-- DataFrame HTML 테이블 출력 -->
-        <div>{{ table_html|safe }}</div>
-    </div>
+     
 
 
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+
+
     <script>
         window.onload = function(){
           document.getElementById("address_kakao").addEventListener("click", function(){ //주소입력칸을 클릭하면
         //카카오 지도 발생
-        new daum.Postcode({
+        var postcode = new daum.Postcode({
             oncomplete: function(data) { //선택시 입력값 세팅
                 document.getElementById("address_kakao").value = data.address; // 주소 넣기
                 document.querySelector("input[name=address_detail]").focus(); //상세입력 포커싱
+                     // 검색창을 닫기
+                    postcode.close();
                     }
-                }).open();
+                });
+
+                postcode.open();
             });
         }
     </script>

@@ -59,7 +59,17 @@ def search_apt_price(type, sigungu_code, start_year_month, end_year_month):
         end_year_month=end_year_month,
     )
     
-    return df
+    #원하는 column만 출력되도록 조정
+    df = df[["roadNm","aptNm","excluUseAr","dealYear","dealMonth","dealDay","dealAmount","floor",
+         "buildYear","dealingGbn","aptDong"]]
+    # column을 한글 이름으로 변경
+    df = df.rename(columns = {"roadNm": "도로명" , "aptNm":"단지명", "excluUseAr":"전용면적", "dealYear":"계약년도",
+                          "dealMonth":"계약월","dealDay":"계약일","dealAmount":"거래금액(단위:만원)","floor":"층",
+                          "buildYear":"건축년도","dealingGbn":"거래유형","aptDong":"아파트동",})
+    # column을 원하는 위치로 재배치
+    df = df[["단지명","아파트동","층","전용면적","도로명","계약년도","계약월","계약일","거래금액(단위:만원)","거래유형","건축년도"]]
+    
+    return df.head(10)
 
 
 
