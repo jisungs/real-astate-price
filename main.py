@@ -10,6 +10,8 @@ def index():
     if request.method == "POST":
         data = request.form.to_dict()
         main_addr = data['address'].split()
+        
+        
         if main_addr:        
             code = sigungu_code(main_addr)
             result = search_apt_price('아파트',code,'202401','202408')

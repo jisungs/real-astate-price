@@ -42,13 +42,18 @@
                 <div class="input-group mb-3">
                   <input type="text"  id="address_kakao" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="address">
                 </div>
+               
 
                 <!-- <label for="">상  세 주 소: </label>
                 <div class="input-group mb-3">
                   <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="address_detail">
                 </div> -->
-              <button class="btn btn-dark" type="submit">실거래가 검색하기</button>
+                
+              <button id="post_addr" class="btn btn-dark" type="submit">실거래가 검색하기</button>
               
+              <div id="postcode_layer" style="display:none;position:absolute;width:500px;height:600px;border:1px solid black;z-index:100;background-color:white;">
+                <!-- 카카오 API가 불러오는 iframe이 삽입될 부분 -->
+              </div>
           </form>
         
           <div class="container"></div>
@@ -75,12 +80,33 @@
             oncomplete: function(data) { //선택시 입력값 세팅
                 document.getElementById("address_kakao").value = data.address; // 주소 넣기
                 document.querySelector("input[name=address_detail]").focus(); //상세입력 포커싱
-                     // 검색창을 닫기
-                    postcode.close();
-                    }
+                  
+                // 팝업 창 (iframe을 감싸고 있는 div) 닫기
+                document.getElementById("postcode_layer").style.display = 'none';   
+                  }
                 });
+                // postcode.open();
+                // 팝업 창을 버튼 아래로 위치시키기
+                  var button = document.getElementById("post_addr");
+                  var buttonPosition = button.getBoundingClientRect(); // 버튼의 위치 및 크기 정보 가져오기
 
-                postcode.open();
+                 // 팝업 열기
+                var popupLayer = document.getElementById("postcode_layer")
+                var windowHeight = window.innerHeight; // 화면의 높이 가져오기
+
+                 // 팝업의 최대 높이를 화면의 남은 공간에 맞추기
+                var maxHeight = windowHeight - buttonPosition.bottom - 90; // 화면 바닥에서 20px 여유
+                popupLayer.style.maxHeight = maxHeight + "px";
+                popupLayer.style.overflowY = "auto"; // 넘칠 경우 세로 스크롤 추가
+
+                popupLayer.style.top = (buttonPosition.bottom + 5) + "px"; // 버튼 아래로 2px 이동
+                popupLayer.style.left = buttonPosition.left + "px"; // 버튼의 왼쪽 정렬과 맞춤
+                
+                // 팝업 열기
+                postcode.embed(popupLayer);
+
+                  // 팝업 창 보이기
+                  popupLayer.style.display = 'block';
             });
         }
     </script>

@@ -14,7 +14,7 @@ api = TransactionPrice(service_key)
 
 def sigungu_code(addr):
     sido_name = addr[0]
-    
+    road_name = ""
     address_link  = {
         '경남' : '경상남도',
         '충북' : '충청북도',
@@ -27,8 +27,8 @@ def sigungu_code(addr):
     if sido_name in address_link:
         sido_name = address_link[sido_name]
         sigungu_name = addr[2]
-    
-
+        road_name = addr[3] +addr[4]
+        
         code = pdr.code_bdong()
         df = code.loc[(code['시도명'].str.contains(sido_name)) & (code['시군구명'].str.contains(sigungu_name)) &
             (code['읍면동명']=='')]
@@ -37,6 +37,7 @@ def sigungu_code(addr):
     else:
         sido_name = addr[0]
         sigungu_name = addr[1]
+        road_name = addr[2] + addr[3]
         code = pdr.code_bdong()
         df = code.loc[(code['시도명'].str.contains(sido_name)) & (code['시군구명'].str.contains(sigungu_name)) &
             (code['읍면동명']=='')]
@@ -44,9 +45,9 @@ def sigungu_code(addr):
 
     
     if len(result) >= 2:
-        return result[1]
+        return result[1], road_name
     else:
-        return result[0]
+        return result[0] , road_name
      
     
 def search_apt_price(type, sigungu_code, start_year_month, end_year_month):
